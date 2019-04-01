@@ -7,9 +7,18 @@ import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('show your enthusiasm', () => {
-  it('shows single exclamation mark to begin with', () => {
+  it('shows no exclamation mark to begin with', () => {
      const wrapper = shallow(<Enthusiasm />);
 
-     expect(wrapper.text()).toBe('Hello Prince!') ;
+     expect(wrapper.text()).toMatch('Hello Prince') ;
   });
+
+    it('shows single exclamation mark when I click "Yay!" button', () => {
+        const wrapper = shallow(<Enthusiasm />);
+        const yayBtn = wrapper.find('button');
+
+        yayBtn.simulate('click');
+
+        expect(wrapper.text()).toMatch('Hello Prince!') ;
+    });
 });
