@@ -15,10 +15,37 @@ describe('show your enthusiasm', () => {
 
     it('shows single exclamation mark when I click "Yay!" button', () => {
         const wrapper = shallow(<Enthusiasm />);
-        const yayBtn = wrapper.find('button');
+        const yayBtn = wrapper.find('#yay');
 
         yayBtn.simulate('click');
 
         expect(wrapper.text()).toMatch('Hello Prince!') ;
+    });
+
+    it('should reduce my enthusiasm level from 4 to 2 if I boo twice', () => {
+        const wrapper = shallow(<Enthusiasm enthusiasmLevel={4} />);
+        const booBtn = wrapper.find('#boo');
+
+        booBtn.simulate('click');
+        booBtn.simulate('click');
+
+        const happyBoard = wrapper.find('#happyBoard');
+
+        expect(happyBoard.text()).toBe('Hello Prince!!')
+    });
+
+    it('should not let me boo beyond negative numbers', () => {
+        const wrapper = shallow(<Enthusiasm enthusiasmLevel={1} />);
+        const booBtn = wrapper.find('#boo');
+        const yayBtn = wrapper.find('#yay');
+
+        booBtn.simulate('click');
+        booBtn.simulate('click');
+        booBtn.simulate('click');
+        yayBtn.simulate('click');
+
+        const happyBoard = wrapper.find('#happyBoard');
+
+        expect(happyBoard.text()).toBe('Hello Prince!')
     });
 });
